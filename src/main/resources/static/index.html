@@ -8,36 +8,63 @@
     <meta name="viewport" content="width=device-width"/>
     <base href="/"/>
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <style type="text/css">
+      h1 {
+        font-size: 150%;
+        text-align: center;
+      }
+      h2 {
+        font-size: 120%;
+        text-align: center;
+      }
+      .container, .container div, .container p {
+        text-align: center;
+      }
+      img#avatar {
+        max-width: 200px;
+        clear: both;
+        margin: 5px;
+      }
+    </style>
     <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/webjars/js-cookie/js.cookie.js"></script>
   </head>
   <body>
-    <h1>Demo</h1>
+    <h1>GitHub OAuth2 Demo (with Spring, Mustache, jQuery, blah blah blah)</h1>
     <div class="container unauthenticated">
-      With Github: <a href="/login/github">click here</a>
+      <h2><a href="/login/github">Authenticate with GitHub</a></h2>
     </div>
     <div class="container authenticated" style="display:none">
-      Logged in as: <span id="user"></span>
+      <p>Logged in as: <a id="user"></a></p>
+      <img id="avatar" />
       <div>
+        <button onClick="repos()" class="btn btn-primary">Repos</button>
         <button onClick="logout()" class="btn btn-primary">Logout</button>
       </div>
     </div>
     <script type="text/javascript">
 
       $.get("/user", function(data) {
+        $("#user").attr("href", "mailto:" + data.userAuthentication.details.email);
         $("#user").html(data.userAuthentication.details.name);
+        $("#avatar").attr("src", data.userAuthentication.details.avatar_url);
         $(".unauthenticated").hide()
         $(".authenticated").show()
       });
 
       var logout = function() {
         $.post("/logout", function() {
+          $("#user").attr("href", '');
           $("#user").html('');
           $(".unauthenticated").show();
           $(".authenticated").hide();
         })
         return true;
+      }
+
+      var repos = function() {
+        window.location = 'repos';
       }
 
       $.ajaxSetup({

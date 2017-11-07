@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>{{user}}'s Repositories</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <style type="text/css">
+      h1 {
+        font-size: 150%;
+        text-align: center;
+      }
+      h2 {
+        font-size: 120%;
+        text-align: center;
+      }
+      .container, .container div, .container p {
+        text-align: center;
+      }
+      table {
+        margin-right: auto;
+        margin-left: auto;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <h1>GitHub OAuth2 Demo (with Spring, Mustache, jQuery, blah blah blah)</h1>
+
+    <table>
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>URL</th>
+        <th>Private?</th>
+      </tr>
+      </thead>
+      <tbody>
+        {{>repo_iter}}
+      </tbody>
+    </table>
+
+  </body>
+</html>
